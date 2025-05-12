@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reference.css">
+    <title>Reference</title>
+</head>
+<body>
+        <nav class="sidebar">
+            <div class ="logo">
+        <img src= "logo.jpg" alt="logo">
+        </div>
+            <h2><a href="/home" target="_blank">Lumina</a></h2>
+
+            <ul class="dropdown"style="list-style-type: disc;">
+                <li onclick="toggleDropdown(this)">Computer Science 
+                  <ul class="sub-list"style="list-style-type:circle;">
+                    <li> <a href="https://www.mendeley.com/search/?page=1&query=Artificial%20Intelligence%20%26%20Machine%20Learning&sortBy=relevance" target="right">Artificial Intelligence & Machine Learning</a></li>
+                    <li> <a href="https://www.mendeley.com/search/?page=1&query=Data%20Science%20%26%20Big%20Data&sortBy=relevance" target="right">Data Science & Big Data</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=%20Cybersecurity&sortBy=relevance" target="right"> Cybersecurity</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Intelligent%20Computing%20Systems&sortBy=relevance" target="right"> Others</a></li>
+                  </ul>
+                </li>
+                <li onclick="toggleDropdown(this)">Business And Management
+                  <ul class="sub-list"style="list-style-type:circle;">
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Finance&sortBy=relevance" target="right">Finance</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Marketing&sortBy=relevance" target="right">Marketing</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Human%20Resources&sortBy=relevance" target="right">Human Resources</a></li>
+                  </ul>
+                </li>
+                <li onclick="toggleDropdown(this)">Social Sciences
+                  <ul class="sub-list" style="list-style-type:circle;">
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Economics&sortBy=relevance" target="right">Economics</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Sociology&sortBy=relevance" target="right">Sociology</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Political%20Science&sortBy=relevance" target="right">Political Science</a></li>
+                  </ul>
+                </li>
+                <li onclick="toggleDropdown(this)">Arts and Humanities
+                  <ul class="sub-list" style="list-style-type:circle;">
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=History&sortBy=relevance" target="right">History</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Philosophy&sortBy=relevance" target="right">Philosophy</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Linguistics&sortBy=relevance" target="right">Linguistics</a></li>
+                  </ul>
+                </li>
+                <li onclick="toggleDropdown(this)">Medical and Health Sciences
+                  <ul class="sub-list" style="list-style-type:circle;">
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Medicine&sortBy=relevance" target="right">Medicine</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Public%20Health&sortBy=relevance" target="right">Public Health</a></li>
+                    <li><a href="https://www.mendeley.com/search/?page=1&query=Psychology&sortBy=relevance" target="right">Psychology</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </nav>
+        <script>
+            function toggleDropdown(element) {
+              element.classList.toggle('open');
+            }
+          </script>
+</body>
+</html>
