@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="item">
+            <h2 class="logo"><img class="logo1" src="{{ url_for('static', filename='logo.jpg') }}"> Lumina</h2>
+            <div class="text-item">
+                <h2>Welcome! <br><span>To Lumina!</span></h2>
+                <p>Join us by creating an account, then sign in to start your research work!</p>
+            </div>
+        </div>
+
+        <div class="login-section">
+            <!-- Login Form -->
+            <div class="form-box login">
+                <form action="/login" method="post" autocomplete="off">
+                    <input type="hidden" name="form_type" value="login">
+                    <h2>Sign In</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="email" autocomplete="off" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="password" autocomplete="new-password" required>
+                        <label>Password</label>
+                    </div>
+                    <button class="btn">Sign In</button>
+                    <a href="{{ url_for('forgot_password') }}" class="forgot-link">Forgot Password?</a>
+                  <pre> <a href="{{ url_for('home') }}" class="forgot-link">Go to Home</a></pre>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Register</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-box register">
+                <form action="/login" method="post" autocomplete="off">
+                    <input type="hidden" name="form_type" value="register">
+                    <h2>Register</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" name="name" autocomplete="off" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="email" autocomplete="off" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="password" autocomplete="new-password" required>
+                        <label>Password</label>
+                    </div>
+                    <button class="btn">Register</button>
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

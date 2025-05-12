@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ profile.name }}'s Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f3ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #6b5b95;
+            color: white;
+            padding: 1rem 2rem;
+        }
+
+        .logout-btn {
+            background-color: #fff;
+            color: #6b5b95;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .details {
+            flex: 2;
+        }
+
+        .profile-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #d1c4e9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            margin-top: 2rem;
+        }
+
+        button {
+            background-color: #6b5b95;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5a4780;
+        }
+
+        .pdf-entry {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f3e5f5;
+            border-radius: 10px;
+        }
+
+        .pdf-entry a {
+            color: #6b5b95;
+            font-weight: bold;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .pdf-entry a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 60%;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #fafafa;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+          .profile-pic {
+        width: 150px;  /* Medium size */
+        height: 150px;  /* Medium size */
+        border-radius: 50%;  /* Makes it round */
+        object-fit: cover;  /* Ensures the image fits the container nicely */
+        cursor: pointer;  /* Adds a pointer cursor to indicate it's clickable */
+    }
+
+    .profile-pic-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    /* The form is hidden initially */
+    .upload-form {
+        display: none;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome, {{ profile.name }}</h1>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+</header>
+
+<div class="container">
+    <!-- Left Side: Profile Details -->
+    <div class="details">
+        <p><h1>{{ profile.name }}</h1></p>
+        <p><strong>About:</strong> {{ profile.about or "Not provided" }}</p>
+        <p><strong>Education:</strong> {{ profile.education or "Not provided" }}</p>
+        <p><strong>Profession:</strong> {{ profile.profession or "Not provided" }}</p>
+        <p><strong>Experience:</strong> {{ profile.experience or "Not provided" }}</p>
+        <p><strong>Projects:</strong> {{ profile.projects or "Not provided" }}</p>
+        <button onclick="document.getElementById('editModal').style.display='block'">Edit Profile</button>
+        <button onclick="window.location.href='{{ url_for('home') }}'"  style="margin-left: 15px;">Go to Home</button>
+    </div>
+
+    <!-- Right Side: Profile Picture -->
+    <div class="profile-section">
+        <img src="{{ profile_img }}" alt="Profile Picture" class="profile-pic"><br>
+        <form action="{{ url_for('upload_profile_pic') }}" method="POST" enctype="multipart/form-data">
+             <input type="file" name="profile_pic" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Form -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('editModal').style.display='none'">&times;</span>
+        <h2>Edit Your Profile</h2>
+        <form action="{{ url_for('save_profile') }}" method="POST" enctype="multipart/form-data">
+            <strong>Name:</strong><input type="text" name="name" placeholder="Name" value="{{ profile.name }}">
+            <strong>About:</strong><textarea name="about" placeholder="About">{{ profile.about }}</textarea>
+            <strong>Education: </strong><input type="text" name="education" placeholder="Education" value="{{ profile.education }}">
+            <strong>Profession:</strong><input type="text" name="profession" placeholder="Profession" value="{{ profile.profession }}">
+            <strong>Experience:</strong><input type="text" name="experience" placeholder="Experience" value="{{ profile.experience }}">
+            <strong>Projects Handled:</strong><textarea name="projects" placeholder="Projects">{{ profile.projects }}</textarea>
+            <strong>Upload Your Journal Article's</strong><input type="file" name="pdf_file" multiple>
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
+</div>
+
+<!-- Uploaded PDFs Section -->
+<div class="container section">
+    <div style="width: 100%">
+        <h2>Your Uploaded PDFs</h2>
+        {% for pdf in pdfs %}
+            <div class="pdf-entry">
+                <strong>{{ pdf.title }}</strong> - {{ pdf.file_size }} KB ({{ pdf.upload_date }})<br>
+                <a href="{{ url_for('view_pdf', pdf_id=pdf.file_id) }}">View</a>
+                <a href="{{ url_for('download_pdf', pdf_id=pdf.file_id) }}">Download</a>
+                <a href="{{ url_for('delete_pdf', pdf_id=pdf.file_id) }}">Delete</a>
+            </div>
+        {% else %}
+            <p>No PDFs uploaded yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // Close modal when clicking outside the modal content
+    window.onclick = function(event) {
+        const modal = document.getElementById('editModal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    <!-- JavaScript to toggle form visibility -->
+
+        function showUploadForm() {
+            document.getElementById('upload-form').style.display = 'block';
+        }
+
+        function toggleProfileEdit() {
+            var editForm = document.getElementById('edit-profile-form');
+            if (editForm.style.display === 'none') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        }
+
+</script>
+
+</body>
+</html>

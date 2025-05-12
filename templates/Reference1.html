@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/6.0.3/docx.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+        /* Layout */
+        body { display: flex; flex-direction: column; height: 100vh; }
+        .main-container { display: flex; flex: 1; height: calc(100vh - 50px); padding: 15px; gap: 15px; }
+
+        /* Sidebar */
+        .sidebar { width: 25%; background: #36013f; color: white; padding: 20px; height: 100vh; border-radius: 8px; }
+        .sidebar h2 { text-align: center; margin-bottom: 20px; }
+        .sidebar a { display: block; color: white; padding: 12px; text-decoration: none; cursor: pointer; border-radius: 5px; }
+        .sidebar a:hover { background: #69359c ; }
+
+    .sidebar h3 {
+      cursor: pointer;
+      margin: 10px 0;
+    }
+
+    .dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background-color: #36013f;
+      margin-left: 10px;
+    }
+
+    .dropdown a {
+      display: block;
+      color: #ecf0f1;
+      padding: 8px 12px;
+      text-decoration: none;
+    }
+
+    .dropdown a:hover {
+      background-color: #69359c;
+    }
+
+    .dropdown.show {
+      max-height: 500px; /* adjust based on content */
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+     <div class ="navbar background hnav-rsp">
+        <ul class=" navlist vclass-rsp">
+        <div class ="logo">
+        <img src= "{{ url_for('static', filename='logo.jpg') }}" alt="logo">
+        </div>
+        <li><a href="{{ url_for('home') }}"> Home </a></li>
+       <li><a href="{{ url_for('refer') }}"> Reference </a></li>
+        <li><a href="{{ url_for('work') }}">Workspace</a></li>
+                        <li><a href="{{ url_for('pstats') }}">Statistical Analysis</a></li>
+        <li> <a href="{{ url_for('guide') }}"> Research guidence </a></li>
+        </ul>
+        <div class ="rightnav vclass-rsp">
+             <a href="{{ url_for('profile') }}"><img src="{{ profile_img }}" alt="Profile Picture" class="profile-image"></a>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- Sidebar (Left) -->
+       <div class="sidebar">
+      <h3 class="toggle">Computer Science ▸</h3>
+    <div class="dropdown" id="csDropdown">
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Artificial%20Intelligence%20%26%20Machine%20Learning&sortBy=relevance')">Artificial Intelligence & Machine Learning</a>
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Data%20Science%20%26%20Big%20Data&sortBy=relevance')">Data Science & Big Data</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=%20Cybersecurity&sortBy=relevance')" > Cybersecurity</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Intelligent%20Computing%20Systems&sortBy=relevance')"> Others</a>
+</div>
+           <h3 class="toggle">Business And Management ▸</h3>
+    <div class="dropdown" id="csDropdown1">
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Finance&sortBy=relevance')">Finance</a>
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Marketing&sortBy=relevance')">Marketing</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Human%20Resources&sortBy=relevance')" >Human Resources</a>
+</div>
+              <h3 class="toggle">Social Sciences ▸</h3>
+    <div class="dropdown" id="csDropdown">
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Economics&sortBy=relevance')">Economics</a>
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Sociology&sortBy=relevance')">Sociology</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Political%20Science&sortBy=relevance')" >Political Science</a>
+</div>
+
+             <h3 class="toggle">Arts and Humanities ▸</h3>
+    <div class="dropdown" id="csDropdown">
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=History&sortBy=relevance')">History</a>
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Philosophy&sortBy=relevance')">Philosophy</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Linguistics&sortBy=relevance')" >Linguistics</a>
+</div>
+
+             <h3 class="toggle">Medical and Health Sciences ▸</h3>
+    <div class="dropdown" id="csDropdown">
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Medicine&sortBy=relevance')">Medicine</a>
+        <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Public%20Health&sortBy=relevance')">Public Health</a>
+       <a onclick="loadWebsite('https://www.mendeley.com/search/?page=1&query=Psychology&sortBy=relevance')" >Psychology</a>
+</div>
+
+
+    </div>
+            <div class="content" id="mainContent"> </div>
+
+        <script>
+    document.querySelectorAll('.toggle').forEach(header => {
+      header.addEventListener('click', () => {
+        const dropdown = header.nextElementSibling;
+        dropdown.classList.toggle('show');
+      });
+    });
+
+    function loadWebsite(url) {
+      document.getElementById("mainContent").innerHTML = `
+        <iframe src="${url}"></iframe>
+      `;
+    }
+  </script>
+</body>
+</html>

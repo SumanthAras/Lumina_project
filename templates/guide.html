@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Research Guidance | Lumina</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .video {
+      float: left;
+      border: 1px solid grey;
+      margin-top: 40px;
+      margin-left: 60px;
+      width: 350px;
+      height: 200px;
+    }
+
+    .main-content {
+      display: flex;
+      height: 130vh;
+    }
+
+    .sidebar {
+      width: 20%;
+      height: 120vh;
+      background: #f1f1f1;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+    }
+
+    .content {
+      width: 55%;
+      padding: 30px;
+    }
+
+    .tips {
+      width: 17%;
+      height: 120vh;
+      background: #f8f9fa;
+      padding: 20px;
+      border-left: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .unit {
+      cursor: pointer;
+      padding: 10px;
+      background-color: #fff;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+    }
+
+    .unit:hover {
+      background-color: #ddd;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar background1 hnav-rsp">
+    <ul class="navlist vclass-rsp">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='logo.jpg') }}" alt="logo">
+      </div>
+      <li><a href="{{ url_for('home') }}"> Home </a></li>
+      <li><a href="{{ url_for('refer') }}"> Reference </a></li>
+      <li><a href="{{ url_for('work') }}">Workspace</a></li>
+      <li><a href="{{ url_for('pstats') }}"> Statistical Analysis </a></li>
+      <li><a href="{{ url_for('guide') }}"> Research guidence </a></li>
+    </ul>
+    <div class="rightnav vclass-rsp">
+      <a href="{{ url_for('profile') }}"><img src="{{ profile_img }}" alt="Profile Picture" class="profile-image"></a>
+    </div>
+  </div>
+
+  <!-- Study Section -->
+  <div class="main-content">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      <h2 style="text-align:center;margin:20px;">Chapters</h2>
+      <div class="unit" onclick="loadPDF('static/unit1.pdf')">Unit 1: INTRODUCTION TO RESEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit2.pdf')">Unit 2: THEORY AND RESEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit3.pdf')">Unit 3: RESEARCH DESIGN</div>
+      <div class="unit" onclick="loadPDF('static/unit4.pdf')">Unit 4: TYPES OF RESEARCHs</div>
+      <div class="unit" onclick="loadPDF('static/unit5.pdf')">Unit 5: FUNDAMENTAL, APPLIED AND ACTION RESEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit6.pdf')">Unit 6: RESEARCH UTILIZATION</div>
+      <div class="unit" onclick="loadPDF('static/unit7.pdf')">Unit 7: TYPES OF RESEARCH DESIGN</div>
+      <div class="unit" onclick="loadPDF('static/unit8.pdf')">Unit 8: QUALITATIVE RESEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit9.pdf')">Unit 9: INTRODUCTION TO EDUCATIONAL RESEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit10.pdf')">Unit 10: LITERATURE SEARCH</div>
+      <div class="unit" onclick="loadPDF('static/unit11.pdf')">Unit 11: CASE STUDY METHOD</div>
+      <div class="unit" onclick="loadPDF('static/unit12.pdf')">Unit 12: REFERENCE VALUES</div>
+      <div class="unit" onclick="loadPDF('static/unit13.pdf')">Unit 13: WRITING A RESEARCH REPORT</div>
+      <div class="unit" onclick="loadVideos()">🎥 Research Videos</div>
+    </div>
+
+    <!-- Center Content Area -->
+    <div class="content" id="unitContent">
+      <section class="section secright">
+        <div class="para">
+          <p class="text-big" style="text-align:center"> Research Guidence </p>
+          <p class="text-small">Lumina offers comprehensive research guidance through a structured, step-by-step PDF format. Whether you're a beginner or an experienced researcher, Lumina simplifies the research journey by breaking it down into clear, easy-to-follow units. Each unit provides detailed insights and practical instructions to help you understand research methodologies, structure your work effectively, and confidently move through every phase of your research project.</p>
+        </div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='refer.png') }}" alt="course" width="250" height="250" class="imgFluid"> </div>
+      </section>
+
+      <section class="section secleft">
+        <div class="para">
+          <p class="text-small">To enhance your learning experience, Lumina also provides carefully selected referential YouTube videos. These videos complement the step-by-step PDFs by offering visual explanations, expert tips, and real-world research examples. They are perfect for gaining deeper understanding and clarity on complex topics, making your research journey both engaging and insightful. </p>
+        </div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='stats.jpeg') }}" alt="course" width="250" height="250" class="imgFluid"> </div>
+      </section>
+
+      <div class="para">
+        <p class="text-small">To get started click on the first unit from the sidebar and the content will get displayed here. for your extra reference , videos have been attached at the last option.</p>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="tips">
+      <h2 style="text-align:center;margin:20px;">Thesis Format</h2>
+      <div class="unit" onclick="loadPDF('static/Thesis/01_title.pdf')">1.Title</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/02_prelim_pages.pdf')">2.Prelim Pages</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/03_content.pdf')">3.Content</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/04_abstract.pdf')">4.Abstract</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/05_chapter 1.pdf')">5.Chapter 1</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/06_chapter 2.pdf')">6.Chapter 2</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/07_chapter 3.pdf')">7.Chapter 3</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/08_chapter 4.pdf')">8.Chapter 4</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/09_chapter 5.pdf')">9.Chapter 5</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/10_chapter 6.pdf')">10.Chapter 6</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/11_chapter 7.pdf')">11.Chapter 7</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/12_annexures.pdf')">12.Annexures</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/80_recommendation.pdf')">Recommendations</div>
+      <div class="unit" onclick="loadPDF('static/Thesis/90_plagiarism_report.pdf')">Plagiarism Report</div>
+
+    </div>
+  </div>
+
+  <script>
+    function loadPDF(pdfPath) {
+      document.getElementById('unitContent').innerHTML = `
+        <iframe src="${pdfPath}"></iframe>
+      `;
+    }
+
+    function loadVideos() {
+      document.getElementById('unitContent').innerHTML = `
+        <h2>Recommended YouTube Videos for Research Guidance</h2>
+        <div class="video"><iframe src="https://www.youtube.com/embed/nJza2kfI8GU?si=8iQw_xexZymyms7Q" allowfullscreen></iframe></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/ni_1dUDaVM0?si=farCHu1Z8rBaWWmm" allowfullscreen></iframe></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/-kguiI17880?si=t_7wJl8GWyGyIdgM" allowfullscreen></iframe></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/3pjilybtP8g?si=MKW2Gl3i9EpNQM4m" allowfullscreen></iframe></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/WqS5ok44eZg?si=YZPlZ7Zei3QtNYg7" allowfullscreen></iframe></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/TEqYnV6KWfY?si=nJlPpv36R6jPzli2" allowfullscreen></iframe></div>
+      `;
+    }
+  </script>
+
+  <section class="contact">
+    <h1 class="textcenter"> Feedback </h1>
+    <form action="/submit-feedback" method="POST" class="form">
+      <input class="form-input" type="text" name="name" placeholder="Enter your name" required>
+      <input class="form-input" type="text" name="email" placeholder="Enter your email" required>
+      <textarea class="form-input" name="message" placeholder="Enter your concern" cols="20" rows="5" required></textarea><br>
+      <button class="btn-dark" type="submit">Submit</button>
+    </form>
+  </section>
+</body>
+</html>

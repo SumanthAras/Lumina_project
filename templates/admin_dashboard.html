@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lumina-Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; display: flex; background: #f4f8fc; }
+        .sidebar { width: 250px; background: #f3e5f5; padding: 20px; height: 100vh; }
+        .sidebar h2 { color: #7D3C98; font-weight: 800; font-size: 22px; }
+        .admin-profile { text-align: center; margin: 20px 0; }
+        .admin-profile img { width: 60px; height: 60px; border-radius: 50%; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar ul li { padding: 15px 10px; cursor: pointer; font-size: 16px; display: flex; align-items: center; color: #333; }
+        .sidebar ul li i {margin-right: 10px; color: #007bff; }
+        .main-content { flex: 1; padding: 20px; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; }
+        .menu-icon i { font-size: 22px; }
+        .profile { display: flex; align-items: center; gap: 10px; }
+        .profile img { width: 40px; height: 40px; border-radius: 50%; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; }
+        .card { background: #f3e5f5; border-radius: 10px; padding: 20px; box-shadow: 0 0 6px rgba(0, 0, 0, 0.05); display: flex; align-items: center; gap: 15px; color: #2b2b2b; font-size: 16px; float: left; }
+        .card i { font-size: 28px; color: #008cff; }
+        .card p { margin: 0; }
+        .card span { font-size: 20px; font-weight: bold; display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; background: #fff; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #f3e5f5; }
+        button { padding: 5px 10px; margin-right: 5px; border: none; background: #7D3C98; color: white; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #5e2b7d; }
+        .user-grid {display: grid;grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));gap: 1rem;padding: 1rem;}
+        .user-card {background: #fff;padding: 1rem;border-radius: 8px;box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+        .user-name {font-weight: bold;font-size: 1.1rem;}
+        .user-email {color: #666;}
+</style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2><i class="fas fa-utensils"></i> LUMINA-ADMIN</h2>
+        <ul>
+            <li><i class="fas fa-th-list"></i> <a onclick="loadUsers()">View Users</a></li>
+            <li><i class="fas fa-users"></i><a onclick="loadManageUsers()">Manage users</a></li>
+            <li><i class="fas fa-th-list"></i> <a onclick="loadValidators()">View Validators</a></li>
+            <li><i class="fas fa-th-list"></i> <a onclick="loadAdmins()">View Admins</a></li>
+            <li><i class="fas fa-store"></i> <a onclick="loadFeedback()">View Feedback</a></li>
+            <li><i class="fas fa-chart-bar"></i><a onclick="loadQueries()"> View Queries</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div class="topbar"><h2>Welcome! {{ admin_name }} </h2>
+        </div>
+
+        <div class="cards" id="cards">
+            <div class="card"><p>Users<br><span>{{ total_users }}</span></p></div>
+            <div class="card"> <p>Validators<br><span>{{ total_validators }}</span></p></div>
+            <div class="card"> <p>Pending users<br><span>{{ pending_users_count }}</span></p></div>
+            <div class="card"> <p>Feedbacks<br><span>{{ feedback }}</span></p></div>
+            <div class="card"> <p>Queries<br><span>{{ queries }}</span></p></div>
+            <div class="card"> <p>Admin<br><span>{{ total_admins }}</span></p></div>
+
+        </div>
+       <div id="manageUsers" class="section" style="display: none;">
+    <h2>Pending User Approvals</h2>
+    <div id="message"></div>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in pending_users %}
+            <tr id="user-row-{{ user._id }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ user['name'] }}</td>
+                <td>{{ user['email'] }}</td><!-- Correct way to access the 'email' field -->
+                <td>
+                    <button onclick="approveUser('{{  user['_id'] }}')">Approve</button>
+                    <button onclick="rejectUser('{{  user['_id'] }}')">Reject</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+         <div id="dashboard-section">
+        <!-- Default dashboard cards go here -->
+    </div>
+
+    <div id="view-users-section" style="display: none;">
+        <h2>All Users</h2>
+        <div id="users-container" class="user-grid"></div>
+    </div>
+
+        <div id="view-validators-section" style="display: none;">
+    <h2>All Validators</h2>
+    <div id="validators-container" class="user-grid"></div>
+</div>
+
+<!-- ADMINS SECTION -->
+<div id="view-admins-section" style="display: none;">
+    <h2>All Admins</h2>
+    <div id="admins-container" class="user-grid"></div>
+</div>
+        <div id="queries-section" style="margin-top: 20px;"></div>
+         <div id="feedback-section" style="margin-top: 20px;"></div>
+
+    </div>
+<script>
+
+function hideAllSections() {
+        document.getElementById("cards").style.display = "none";
+        document.getElementById('manageUsers').style.display = "none";
+        document.getElementById("view-users-section").style.display = "none";
+        document.getElementById("view-validators-section").style.display = "none";
+        document.getElementById("view-admins-section").style.display = "none";
+        document.getElementById("queries-section").style.display = "none";
+        document.getElementById("feedback-section").style.display = "none";
+    }
+
+  function loadManageUsers() {
+            hideAllSections();
+            document.getElementById('manageUsers').style.display = 'block';
+}
+
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function approveUser(userId) {
+        fetch('/approve_user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            document.getElementById(`user-row-${userId}`).remove();
+        })
+        .catch(error => {
+            alert("❌ Error approving user");
+            console.error(error);
+        });
+    }
+
+    function rejectUser(userId) {
+        fetch('/reject_user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            document.getElementById(`user-row-${userId}`).remove();
+        })
+        .catch(error => {
+            alert("❌ Error rejecting user");
+            console.error(error);
+        });
+    }
+
+      function loadUsers() {
+        fetch('/api/get-users')
+            .then(response => response.json())
+            .then(users => {
+                const container = document.getElementById("users-container");
+                container.innerHTML = '';
+                users.forEach(user => {
+                    const card = document.createElement("div");
+                    card.className = "user-card";
+                    card.innerHTML = `<div class="user-name">${user.name}</div><div class="user-email">${user.email}</div>`;
+                    container.appendChild(card);
+                });
+                hideAllSections();
+                document.getElementById("view-users-section").style.display = "block";
+            });
+    }
+
+    function loadValidators() {
+        fetch('/api/get-validators')
+            .then(response => response.json())
+            .then(validators => {
+                const container = document.getElementById("validators-container");
+                container.innerHTML = '';
+                validators.forEach(val => {
+                    const card = document.createElement("div");
+                    card.className = "user-card";
+                    card.innerHTML = `<div class="user-name">${val.name}</div><div class="user-email">${val.email}</div><div class="user-categories">
+                           <strong>Categories:</strong> ${val.categories && val.categories.length > 0 ? val.categories.join(', ') : 'Not specified'}
+                        </div>`;
+                    container.appendChild(card);
+                });
+                hideAllSections();
+                document.getElementById("view-validators-section").style.display = "block";
+            });
+    }
+
+    function loadAdmins() {
+        fetch('/api/get-admins')
+            .then(response => response.json())
+            .then(admins => {
+                const container = document.getElementById("admins-container");
+                container.innerHTML = '';
+                admins.forEach(admin => {
+                    const card = document.createElement("div");
+                    card.className = "user-card";
+                    card.innerHTML = `<div class="user-name">${admin.admin_name}</div><div class="user-email">${admin.admin_email}</div>`;
+                    container.appendChild(card);
+                });
+                hideAllSections();
+                document.getElementById("view-admins-section").style.display = "block";
+            });
+    }
+
+    function loadQueries() {
+    fetch('/get-queries')
+        .then(response => response.json())
+        .then(queries => {
+            const section = document.getElementById('queries-section');
+            section.innerHTML = '<h3>User Queries</h3>';
+            if (queries.length === 0) {
+                section.innerHTML += '<p>No queries found.</p>';
+                return;
+            }
+
+            queries.forEach(q => {
+                section.innerHTML += `
+                    <div style="border:1px solid #ccc; padding:15px; margin:10px 0; border-radius:8px;">
+                        <strong>Name:</strong> ${q.name}<br>
+                        <strong>Email:</strong> ${q.email}<br>
+                        <strong>Query:</strong> ${q.message}
+                    </div>
+                `;
+            });
+            hideAllSections();
+                document.getElementById("queries-section").style.display = "block";
+        });
+}
+
+       function loadFeedback() {
+    fetch('/get-feedback')
+        .then(response => response.json())
+        .then(feedback => {
+            const section = document.getElementById('feedback-section');
+            section.innerHTML = '<h3>User Feedbacks</h3>';
+            if (feedback.length === 0) {
+                section.innerHTML += '<p>No feedbacks found.</p>';
+                return;
+            }
+
+            feedback.forEach(q => {
+                section.innerHTML += `
+                    <div style="border:1px solid #ccc; padding:15px; margin:10px 0; border-radius:8px;">
+                        <strong>Name:</strong> ${q.name}<br>
+                        <strong>Email:</strong> ${q.email}<br>
+                        <strong>Query:</strong> ${q.message}
+                    </div>
+                `;
+            });
+            hideAllSections();
+                document.getElementById("feedback-section").style.display = "block";
+        });
+}
+
+</script>
+
+</body>
+</html>

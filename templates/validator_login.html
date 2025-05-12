@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Validator-Login</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .dropdown-checkbox {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #36013f;
+            color: white;
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            min-width: 250px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            z-index: 1;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+{% if alert %}
+<script>
+    alert("{{ alert }}");
+</script>
+{% endif %}
+    <div class="background"></div>
+    <div class="container">
+        <div class="item">
+            <h2 class="logo"><img class="logo1" src="{{ url_for('static', filename='logo.jpg') }}"> Lumina</h2>
+            <div class="text-item">
+                <h2>Welcome! <br><span>To Lumina!</span></h2>
+                <p>Join us by creating an account, then sign in to start your research work!</p>
+            </div>
+        </div>
+
+        <div class="login-section">
+            <!-- Login Form -->
+            <div class="form-box login">
+                <form action="/validator-login" method="post" autocomplete="off">
+                    <input type="hidden" name="form_type" value="login">
+                    <h2>Sign In</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="validator_email" autocomplete="off" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="validator_password" autocomplete="new-password" required>
+                        <label>Password</label>
+                    </div>
+                    <button class="btn">Sign In</button>
+                     <a href="{{ url_for('home') }}" class="forgot-link">Go to Home</a>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Register</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-box register">
+                <form action="/validator-login" method="post" autocomplete="off">
+                    <input type="hidden" name="form_type" value="register">
+                    <h2>Register</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" name="validator_name" autocomplete="off" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="validator_email" autocomplete="off" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="validator_password" autocomplete="new-password" required>
+                        <label>Password</label>
+                    </div>
+
+                    <!-- Dropdown for Categories (Only in Registration) -->
+                    <div class="dropdown-checkbox">
+                        <button type="button" onclick="toggleDropdown()" class="dropbtn">Select Categories</button>
+                        <div id="dropdown-content" class="dropdown-content">
+                            <label><input type="checkbox" name="categories[]" value="Computer Science"> Computer Science</label><br>
+                            <label><input type="checkbox" name="categories[]" value="Business And Management"> Business And Management</label><br>
+                            <label><input type="checkbox" name="categories[]" value="Social Sciences"> Social Sciences</label><br>
+                            <label><input type="checkbox" name="categories[]" value="Arts and Humanities"> Arts and Humanities</label><br>
+                            <label><input type="checkbox" name="categories[]" value="Medical and Health Sciences"> Medical and Health Sciences</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Register</button>
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+    // Toggle the dropdown display when clicking the "Select Categories" button
+    function toggleDropdown() {
+        const content = document.getElementById("dropdown-content");
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    // Optional: Collect selected categories and append them as hidden fields on form submission
+    document.querySelector(".register form").addEventListener("submit", function(event) {
+        // Collect selected categories
+        const selectedCategories = getSelectedCategories();
+
+        // If no categories are selected, prevent the form submission and show an alert
+        if (selectedCategories.length === 0) {
+            alert("Please select at least one category.");
+            event.preventDefault();  // Prevent form submission
+        } else {
+            // Add the selected categories to the form as hidden inputs
+            selectedCategories.forEach(function(category) {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "categories[]";
+                hiddenInput.value = category;
+                document.querySelector(".register form").appendChild(hiddenInput);
+            });
+        }
+    });
+
+    // Function to get selected categories from the dropdown
+    function getSelectedCategories() {
+        const checkboxes = document.querySelectorAll('#dropdown-content input[type="checkbox"]:checked');
+        return Array.from(checkboxes).map(cb => cb.value);
+    }
+</script>
+</body>
+</html>

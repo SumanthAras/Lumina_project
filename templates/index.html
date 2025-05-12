@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina: One stop for all research work</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+    <style>/* Dropdown button */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Show the dropdown content when hovering */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style for the links in the dropdown */
+.dropdown-content a {
+    color:black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+</style>
+</head>
+<body>
+    <div class ="navbar background hnav-rsp">
+        <ul class=" navlist vclass-rsp">
+        <div class ="logo">
+        <img src= "{{ url_for('static', filename='logo.jpg') }}" alt="logo">
+        </div>
+        <li><a href="{{ url_for('home') }}"> Home </a></li>
+        <li><a href="{{ url_for('refer') }}"> Reference </a></li>
+        <li><a href="{{ url_for('work') }}">Workspace</a></li>
+        <li> <a href="{{ url_for('pstats') }}"> Statistical Analysis </a></li>
+            <li> <a href="{{ url_for('guide') }}"> Research guidence </a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Join Us As</a>
+                <div class="dropdown-content" >
+                    <a href="{{ url_for('admin_login') }}" style="color:black;">Admin</a>
+                    <a href="{{ url_for('login') }}"style="color:black;">User</a>
+                     <a href="{{ url_for('validator_login') }}"style="color:black;">Validator</a>
+                </div>
+            </li>
+        </ul>
+
+        <div class ="rightnav vclass-rsp">
+             <a href="{{ url_for('profile') }}"><img src="{{ profile_img }}" alt="Profile Picture" class="profile-image"></a>
+        </div>
+
+    </div>
+    <div class="burger">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <script type="text/javascript">
+    burger=document.querySelector('.burger') //returns the first element that matches the specified selectors//
+    navbar=document.querySelector('.navbar')
+    navlist=document.querySelector('.navlist')
+    rightnav=document.querySelector('.rightnav')
+
+    burger.addEventListener('click',()=>{
+    rightnav.classList.toggle('vclass-rsp'); //checks the visibilty show of the element//
+    navlist.classList.toggle('vclass-rsp');
+    navbar.classList.toggle('hnav-rsp');
+    })
+    </script>
+    </div>
+    </nav>
+    <section class="background fsection">
+    <div class="box-main">
+    <div class="fhalf">
+    <p class="text-big">Lumina: One stop for all research work</p>
+    <p class="text-small">
+        Lumina is an integrated web research support tool designed to streamline and enhance the research process. Whether you're conducting academic research or market analysis, Lumina provides a seamless experience to help you work smarter and elevate the quality of your findings. </p>
+    </div>
+    </section>
+    <section class=" section secright">
+        <div class="para">
+        <p class="text-big"><br> We got everything you've been looking for!! </p>
+        <p class="text-small">Whether you're just starting out or already have some experience, we offer a guidance tutorial on how to start a research work from the scratch.s. Offering a comprehensive suite of features, Lumina empowers users to efficiently collect, organize, analyze, and synthesize data from a variety of online sources. With its intuitive interface and robust functionality, Lumina is the ultimate companion for researchers of all disciplines.
+        </p></div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='ever.jpg') }}" alt="course"  width="350" height="300" class="imgFluid"> </div>
+        </section>
+
+        <section class="section secleft">
+        <div class="para">
+        <p class="text-big">Reference </p>
+        <p class="text-small"> In addition to its powerful research tools, Lumina simplifies the process of managing references. The platform ensures that your research is properly referenced and compliant with academic standards. Whether you're working with books, journal articles, websites, or other sources, Lumina helps you keep track of your references effortlessly. It provides the categoreis of research to sort the references and integrates with other referencing sites. It provides the sample formates for citation. This feature saves time, reduces the risk of citation errors, and makes it easier than ever to compile your bibliography, allowing you to focus more on your research and less on formatting. </p></div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='refer.png') }}" alt="course"  width="350" height="300" class="imgFluid"> </div>
+        </section>
+
+        <section class=" section secright">
+        <div class="para">
+        <p class="text-big"> Statistical analysis</p>
+        <p class="text-small"> Lumina also offers advanced statistical analysis tools to help you make sense of your data with ease. Whether you're analyzing trends, testing hypotheses, or performing complex calculations, Lumina provides a variety of statistical methods to ensure your results are accurate and meaningful. The platform supports a range of statistical techniques, from basic descriptive statistics to more advanced analysis, all with intuitive interfaces that simplify even the most complex tasks. With Lumina, you can confidently analyze your data, draw insights, and support your research with robust, data-driven conclusions.  </p></div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='stats.jpeg') }}" alt="course" width="350" height="300" class="imgFluid"> </div>
+        </section>
+
+        <section class="section secleft">
+        <div class="para">
+        <p class="text-big">Security of data </p>
+        <p class="text-small">Lumina prioritizes the security and privacy of your research. With robust encryption protocols and secure data storage, your information is protected every step of the way. The platform ensures that all your research data, documents, and references are safeguarded from unauthorized access, giving you peace of mind while you work. Lumina's commitment to security means that you can focus on your research with confidence, knowing that your sensitive information is in safe hands.</p></div>
+        <div class="thumbnail"> <img src="{{ url_for('static', filename='secure.jpg') }}" alt="course"  width="350" height="300" class="imgFluid"> </div>
+        </section>
+        <section class=" section secright">
+            <div class="para">
+            <p class="text-big">Research Guidence</p>
+            <p class="text-small"> Lumina goes beyond just providing tools by offering comprehensive tutorial guidance to help you start your research from scratch. Whether you're new to research or looking to refine your skills, Lumina’s step-by-step tutorials guide you through the entire process— from formulating a research question to gathering data, analyzing results, and properly citing sources. These easy-to-follow resources are designed to equip you with the knowledge and confidence to tackle any research project, ensuring you get the best results every time.  </p></div>
+            <div class="thumbnail"> <img src="{{ url_for('static', filename='learn.jpg') }}" alt="course" width="350" height="300" class="imgFluid"> </div>
+            </section>
+        <section class="contact">
+        <h1 class="textcenter"> Need help ? Contact us.</h1>
+        <form action="/submit-query" method="POST" class="form">
+    <input class="form-input" type="text" name="name" placeholder="Enter your name" required>
+    <input class="form-input" type="text" name="email" placeholder="Enter your email" required>
+    <textarea class="form-input" name="message" placeholder="Enter your concern" cols="20" rows="5" required></textarea><br>
+    <button class="btn-dark" type="submit">Submit</button>
+</form>
+        <script>
+       function myFunc() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const text = document.getElementById('message').value;
+
+    fetch('/submit-query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert("Your concern is sent successfully!");
+            // Optionally clear form
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        } else {
+            alert("Submission failed. Try again.");
+        }
+    });
+}
+        </script>
+        </section>
+        <footer class="background">
+        <p class="textfooter"> Copyright &copy; 2029 elixir.com - All rights are reserved</p>
+        </footer>
+        </body>
+        </html>
